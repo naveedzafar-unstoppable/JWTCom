@@ -1,0 +1,53 @@
+﻿Steps to generate the assemble file and publish it are below
+
+1. build the project and go in the bin folder and copy all files 
+2. paste it to a folder in the c drive 
+3. open commmand prompt in admin mode 
+4. go to c:\windows\microsoft.net\framework\v4.0.30319 folder 
+5. to register assembly use this commmand 
+
+	regasm c:\assembly\WebsiteAlive.COM.JWTGenerator.dll /tlb /codebase
+
+to unregister 
+	regasm c:\assembly\WebsiteAlive.COM.JWTGenerator.dll /u
+
+
+The secret for JWT generation is hard coded so if in future the security code changes change it in code create another build and register the dll
+////////////////////////////////////////////////////////////////
+how to use functions in ASP - setJWTSession
+////////////////////////////////////////////////////////////////
+        <%
+dim objectref
+dim groupid
+dim sessionid
+dim operatorid
+dim Secret
+dim objCon
+objectref = "first"
+groupid = 5
+sessionid = 15
+operatorid = 20
+Secret = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk"
+
+Set objCon = Server.CreateObject("WebsiteAlive.COM.JWTGenerator")
+Dim jResponse
+jResponse = objCon.setJWTSession(objectref,groupid,operatorid,sessionid )
+
+Response.Write(jResponse)
+Set objCon = Nothing
+%>
+////////////////////////////////////////////////////////////////
+how to use functions in ASP - getJWTSession
+////////////////////////////////////////////////////////////////
+    <%
+dim jwttoken
+dim objCon
+jwttoken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvYmplY3RyZWYiOiJmaXJzdCIsImdyb3VwaWQiOjUsIm9wZXJhdG9yaWQiOjIwLCJzZXNzaW9uaWQiOjE1LCJleHAiOjE0ODk5Mzc1NDQsImlhdCI6MTQ4OTY3ODM0NH0.Fpzls6iMnM3lOf0OKs-aA14v_dPFFP6_2uBHJi4e8Mw"
+Secret = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk"
+
+Set objCon = Server.CreateObject("WebsiteAlive.COM.JWTGenerator")
+Dim jResponse
+jResponse = objCon.getJWTSession(jwttoken )
+Response.Write(jResponse)
+Set objCon = Nothing
+%>
